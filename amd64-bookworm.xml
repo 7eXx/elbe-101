@@ -28,7 +28,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 	<target>
 		<hostname>amd64-bookworm</hostname>
 		<domain>elbe-ci</domain>
-		<passwd>root</passwd>
+		<passwd_hashed>$6$1nmaU6XmOW5ntwo$ZjZhkN2vG1Wc566EOc6HgWaKSCBYE5ZXB1UbXFUt4.kaDQYpGH5uMyFlgzONB3Pyw0GYeVQahhF1bLudNuAIt/</passwd_hashed>
 		<console>ttyS0,115200</console>
 
 		<images>
@@ -70,6 +70,8 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			</file>
 			<cp path="/etc/bash.bashrc">/root/.bashrc</cp>
 			<artifact>/etc/hosts</artifact>
+			<rm>var/cache/apt/archives/*.deb</rm>
+        	<adduser passwd_hashed="$6$6eG.vi5Wls9Lb$TL7KIEWcETYFun2loyYt/RVNm5qge3OtWVYJpGGUVaBgkZcDSonVNd0uNX7UFvWrki5XHoyVdX/QUx9/hdXiq1" shell="/bin/bash">elbe</adduser>
 		</finetuning>
 
 		<project-finetuning>

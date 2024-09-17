@@ -19,12 +19,18 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<primary_host>deb.debian.org</primary_host>
 			<primary_path>/debian</primary_path>
 			<primary_proto>http</primary_proto>
+			<url-list>
+				<url>
+					<binary>http://deb.debian.org/debian-security bookworm-security main</binary>
+					<source>http://deb.debian.org/debian-security bookworm-security main</source>
+				</url>
+			</url-list>
 		</mirror>
 		<suite>bookworm</suite>
 	</project>
 	<target>
-		<hostname>debian</hostname>
-		<passwd>debian</passwd>
+		<hostname>lxvm</hostname>
+		<passwd>foo</passwd>
 		<console>ttyS0,115200</console>
 		<package>
 			<tar>

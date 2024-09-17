@@ -66,7 +66,12 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<bylabel>
 				<label>rfs</label>
 				<mountpoint>/</mountpoint>
-				<fs><type>ext4</type></fs>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
+				</fs>
 			</bylabel>
 			<!-- the EFI system partition needs to be mounted at /boot/efi -->
 			<bylabel>
@@ -77,15 +82,14 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				</fs>
 			</bylabel>
 		</fstab>
-
+		<install-recommends />
 		<pkg-list>
 		  <!-- install the signed EFI version of grub -->
 			<pkg>grub-efi-amd64-signed</pkg>
+			<pkg>shim-signed</pkg>
 		  	<pkg>linux-image-amd64</pkg>
 		  	<pkg>systemd</pkg>
 		</pkg-list>
-
-		<install-recommends />
 
 		<finetuning>
 			<cp path="/etc/bash.bashrc">/root/.bashrc</cp>

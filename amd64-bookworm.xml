@@ -89,7 +89,6 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<pkg>shim-signed</pkg>
 		  	<pkg>linux-image-amd64</pkg>
 		  	<pkg>systemd</pkg>
-			<pkg>linux-firmware</pkg>
 			<!-- basic configuration tools -->
 		  	<pkg>sudo</pkg>
 		  	<pkg>console-setup</pkg>
@@ -123,7 +122,14 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<rm>var/cache/apt/archives/*.deb</rm>
 			<!-- password for this user: elbe -->
 			<adduser passwd_hashed="$6$6eG.vi5Wls9Lb$TL7KIEWcETYFun2loyYt/RVNm5qge3OtWVYJpGGUVaBgkZcDSonVNd0uNX7UFvWrki5XHoyVdX/QUx9/hdXiq1" shell="/bin/bash">elbe</adduser>
-			
+			<file dst="/etc/default/keyboard" append="false" encoding="plain">
+				XKBMODEL="pc105"
+				XKBLAYOUT="it"
+				XKBVARIANT=""
+				XKBOPTIONS=""
+
+				BACKSPACE="guess"
+			</file>
 		</finetuning>
 
 		<project-finetuning>

@@ -84,12 +84,37 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		</fstab>
 		<install-recommends />
 		<pkg-list>
-		  <!-- install the signed EFI version of grub -->
+		  	<!-- install the signed EFI version of grub -->
 			<pkg>grub-efi-amd64-signed</pkg>
 			<pkg>shim-signed</pkg>
 		  	<pkg>linux-image-amd64</pkg>
 		  	<pkg>systemd</pkg>
+			<pkg>linux-firmware</pkg>
+			<!-- basic configuration tools -->
 		  	<pkg>sudo</pkg>
+		  	<pkg>console-setup</pkg>
+			<pkg>keyboard-configuration</pkg>
+			<!-- nice to haves -->
+			<pkg>acl</pkg>
+			<pkg>apt-transport-https</pkg>
+			<pkg>debian-keyring</pkg>
+			<pkg>debian-archive-keyring</pkg>
+			<pkg>tcpdump</pkg>
+			<pkg>psmisc</pkg>
+			<pkg>net-tools</pkg>
+			<pkg>mc</pkg>
+			<pkg>i2c-tools</pkg>
+			<pkg>htop</pkg>
+			<pkg>openvpn</pkg>
+			<pkg>pure-ftpd</pkg>
+			<pkg>rsync</pkg>
+			<pkg>telnet</pkg>
+			<pkg>net-tools</pkg>
+			<pkg>openssh-client</pkg>
+			<pkg>openssh-server</pkg>
+			<pkg>iptables</pkg>
+			<pkg>htop</pkg>
+			<pkg>smbclient</pkg>
 		</pkg-list>
 
 		<finetuning>

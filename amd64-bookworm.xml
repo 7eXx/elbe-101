@@ -91,6 +91,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		  	<pkg>systemd</pkg>
 			<!-- basic configuration tools -->
 		  	<pkg>sudo</pkg>
+		  	<pkg>network-manager</pkg>
 		  	<pkg>console-setup</pkg>
 			<pkg>keyboard-configuration</pkg>
 			<!-- nice to haves -->

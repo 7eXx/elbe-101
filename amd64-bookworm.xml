@@ -55,17 +55,31 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<label>uefi</label>
 					<bootable>true</bootable>
 				</partition>
+				<partition> 
+					<size>1GiB</size>
+					<label>root</label>
+				</partition>
 				<partition>
 					<size>remain</size>
-					<label>rfs</label>
+					<label>home</label>
 				</partition>
 			</gpthd>
 		</images>
 
 		<fstab>
 			<bylabel>
-				<label>rfs</label>
+				<label>root</label>
 				<mountpoint>/</mountpoint>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>home</label>
+				<mountpoint>/home</mountpoint>
 				<fs>
 					<type>ext4</type>
 					<fs-finetuning>
@@ -91,7 +105,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		  	<pkg>systemd</pkg>
 			<!-- basic configuration tools -->
 		  	<pkg>sudo</pkg>
-		  	<pkg>network-manager</pkg>z
+		  	<pkg>network-manager</pkg>
 		  	<pkg>console-setup</pkg>
 			<pkg>keyboard-configuration</pkg>
 			<!-- nice to haves -->
@@ -138,19 +152,21 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<losetup img="sda.img">
 				<extract_partition part="1">sda1.img</extract_partition>
 				<extract_partition part="2">sda2.img</extract_partition>
+				<extract_partition part="3">sda3.img</extract_partition>
 				<command part="1">
 				  ls $ELBE_MNT
 				</command>
 			</losetup>
 			<set_packer packer="none">sda1.img</set_packer>
 			<set_packer packer="tarxz">sda2.img</set_packer>
+			<set_packer packer="tarxz">sda3.img</set_packer>
 		</project-finetuning>
 	</target>
 	<check-image-list>
 		<check>
 			<img>sda.img.tar.gz</img>
 			<interpreter>qemu-system-x86_64</interpreter>
-			<interpreter-opts>-m 2G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
+			<interpreter-opts>-m 4G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
 
 			<action> <login /> </action>
 		</check>

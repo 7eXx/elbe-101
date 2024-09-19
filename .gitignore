@@ -3,3 +3,6 @@
 **/initvm
 
 **/sda.img*
+
+# local env
+.env.local

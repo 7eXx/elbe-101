@@ -1,11 +1,11 @@
 #!/bin/sh
 
-set -xe
+set -e
 
 if [ -z "$PRJ" ]; then
     echo "PRJ variable is not set"
     echo "Execute: " 
-    echo "  - PRJ=\$(sudo elbe control create_project)"
+    echo "  - PRJ=\$(elbe control create_project)"
     echo "  - export PRJ"
 
     exit 1
@@ -25,13 +25,13 @@ if [ ! -f "$1" ]; then
     exit 1
 fi
 
-sudo elbe control set_xml $PRJ $1
+elbe control set_xml $PRJ $1
 
-sudo elbe control build $PRJ
+elbe control build $PRJ
 
-sudo elbe control wait_busy $PRJ
+elbe control wait_busy $PRJ
 
 output_folder="elbe-$(date +%Y%m%d-%H%M%S)"
 
-sudo elbe control get_files --output="$output_folder" $PRJ
+elbe control get_files --output="$output_folder" $PRJ
 

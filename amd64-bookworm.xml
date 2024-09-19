@@ -46,7 +46,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		<images>
 			<gpthd>
 				<name>sda.img</name>
-				<size>2GiB</size>
+				<size>4GiB</size>
 				<!-- install grub -->
 				<grub-install />
 				<!-- the EFI system partition -->
@@ -91,7 +91,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		  	<pkg>systemd</pkg>
 			<!-- basic configuration tools -->
 		  	<pkg>sudo</pkg>
-		  	<pkg>network-manager</pkg>
+		  	<pkg>network-manager</pkg>z
 		  	<pkg>console-setup</pkg>
 			<pkg>keyboard-configuration</pkg>
 			<!-- nice to haves -->
@@ -131,6 +131,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 
 				BACKSPACE="guess"
 			</file>
+			<command>usermod -aG sudo elbe</command>
 		</finetuning>
 
 		<project-finetuning>

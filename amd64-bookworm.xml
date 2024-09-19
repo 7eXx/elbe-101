@@ -46,7 +46,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		<images>
 			<gpthd>
 				<name>sda.img</name>
-				<size>4GiB</size>
+				<size>8GiB</size>
 				<!-- install grub -->
 				<grub-install />
 				<!-- the EFI system partition -->
@@ -56,7 +56,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<bootable>true</bootable>
 				</partition>
 				<partition> 
-					<size>1GiB</size>
+					<size>4GiB</size>
 					<label>root</label>
 				</partition>
 				<partition>

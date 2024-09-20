@@ -31,3 +31,7 @@ $ sudo elbe control wait_busy $PRJ
 ```
 Now you can twick your project XML file and restart build.  
 To do so, repeat latest three steps.
+
+## Automatic script
+Using the **build-image.sh** script, you can build your image in one command.  
+NB: Remmber to assign the project ID in **.env.local** file or it will create a new one.

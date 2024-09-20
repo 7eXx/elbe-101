@@ -46,7 +46,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		<images>
 			<gpthd>
 				<name>sda.img</name>
-				<size>8GiB</size>
+				<size>16GiB</size>
 				<!-- install grub -->
 				<grub-install />
 				<!-- the EFI system partition -->
@@ -59,6 +59,14 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<size>4GiB</size>
 					<label>root</label>
 				</partition>
+				<partition> 
+					<size>1GiB</size>
+					<label>tmp</label>
+				</partition>
+				<partition> 
+					<size>1GiB</size>
+					<label>var</label>
+				</partition>
 				<partition>
 					<size>remain</size>
 					<label>home</label>
@@ -67,9 +75,41 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		</images>
 
 		<fstab>
+			<!-- the EFI system partition needs to be mounted at /boot/efi -->
+			<bylabel>
+				<label>uefi</label>
+				<mountpoint>/boot/efi</mountpoint>
+				<options>ro</options>
+				<fs>
+					<type>vfat</type>
+				</fs>
+			</bylabel>
 			<bylabel>
 				<label>root</label>
 				<mountpoint>/</mountpoint>
+				<options>ro</options>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>tmp</label>
+				<mountpoint>/tmp</mountpoint>
+				<options>ro</options>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>var</label>
+				<mountpoint>/var</mountpoint>
+				<options>ro</options>
 				<fs>
 					<type>ext4</type>
 					<fs-finetuning>
@@ -85,14 +125,6 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<fs-finetuning>
 						<device-command>tune2fs -i 0 {device}</device-command>
 					</fs-finetuning>
-				</fs>
-			</bylabel>
-			<!-- the EFI system partition needs to be mounted at /boot/efi -->
-			<bylabel>
-				<label>uefi</label>
-				<mountpoint>/boot/efi</mountpoint>
-				<fs>
-					<type>vfat</type>
 				</fs>
 			</bylabel>
 		</fstab>
@@ -153,6 +185,8 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				<extract_partition part="1">sda1.img</extract_partition>
 				<extract_partition part="2">sda2.img</extract_partition>
 				<extract_partition part="3">sda3.img</extract_partition>
+				<extract_partition part="3">sda4.img</extract_partition>
+				<extract_partition part="3">sda5.img</extract_partition>
 				<command part="1">
 				  ls $ELBE_MNT
 				</command>
@@ -160,13 +194,15 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<set_packer packer="none">sda1.img</set_packer>
 			<set_packer packer="tarxz">sda2.img</set_packer>
 			<set_packer packer="tarxz">sda3.img</set_packer>
+			<set_packer packer="tarxz">sda4.img</set_packer>
+			<set_packer packer="tarxz">sda5.img</set_packer>
 		</project-finetuning>
 	</target>
 	<check-image-list>
 		<check>
 			<img>sda.img.tar.gz</img>
 			<interpreter>qemu-system-x86_64</interpreter>
-			<interpreter-opts>-m 4G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
+			<interpreter-opts>-m 16G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
 
 			<action> <login /> </action>
 		</check>

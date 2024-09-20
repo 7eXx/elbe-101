@@ -46,7 +46,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		<images>
 			<gpthd>
 				<name>sda.img</name>
-				<size>16GiB</size>
+				<size>8GiB</size>
 				<!-- install grub -->
 				<grub-install />
 				<!-- the EFI system partition -->
@@ -56,7 +56,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<bootable>true</bootable>
 				</partition>
 				<partition> 
-					<size>4GiB</size>
+					<size>2GiB</size>
 					<label>root</label>
 				</partition>
 				<partition> 
@@ -98,7 +98,6 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<bylabel>
 				<label>tmp</label>
 				<mountpoint>/tmp</mountpoint>
-				<options>ro</options>
 				<fs>
 					<type>ext4</type>
 					<fs-finetuning>
@@ -109,7 +108,6 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<bylabel>
 				<label>var</label>
 				<mountpoint>/var</mountpoint>
-				<options>ro</options>
 				<fs>
 					<type>ext4</type>
 					<fs-finetuning>
@@ -140,6 +138,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		  	<pkg>network-manager</pkg>
 		  	<pkg>console-setup</pkg>
 			<pkg>keyboard-configuration</pkg>
+			<pkg>locales</pkg>
 			<!-- nice to haves -->
 			<pkg>acl</pkg>
 			<pkg>apt-transport-https</pkg>
@@ -169,6 +168,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<rm>var/cache/apt/archives/*.deb</rm>
 			<!-- password for this user: elbe -->
 			<adduser passwd_hashed="$6$6eG.vi5Wls9Lb$TL7KIEWcETYFun2loyYt/RVNm5qge3OtWVYJpGGUVaBgkZcDSonVNd0uNX7UFvWrki5XHoyVdX/QUx9/hdXiq1" shell="/bin/bash">elbe</adduser>
+			<command>usermod -aG sudo elbe</command>
 			<file dst="/etc/default/keyboard" append="false" encoding="plain">
 				XKBMODEL="pc105"
 				XKBLAYOUT="it"
@@ -177,7 +177,6 @@ SPDX-FileCopyrightText: Linutronix GmbH
 
 				BACKSPACE="guess"
 			</file>
-			<command>usermod -aG sudo elbe</command>
 		</finetuning>
 
 		<project-finetuning>
@@ -202,7 +201,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		<check>
 			<img>sda.img.tar.gz</img>
 			<interpreter>qemu-system-x86_64</interpreter>
-			<interpreter-opts>-m 16G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
+			<interpreter-opts>-m 8G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
 
 			<action> <login /> </action>
 		</check>

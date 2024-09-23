@@ -1,15 +1,19 @@
 #!/bin/sh
 
+set -o allexport
+[ -f .env ] && . ./.env
+[ -f .env.local ] && . ./.env.local
+set +o allexport
+
 set -e
 
 if [ -z "$PRJ" ]; then
-    echo "PRJ variable is not set"
-    echo "Execute: " 
-    echo "  - PRJ=\$(elbe control create_project)"
-    echo "  - export PRJ"
-
-    exit 1
+    PRJ=$(elbe control create_project)
+    echo "Creating a new project - $PRJ"
+    echo "PRJ=$PRJ" > .env.local
 fi
+
+echo "Using project - $PRJ"
 
 if [ -z "$1" ]; then
     echo "Missing project xml file"

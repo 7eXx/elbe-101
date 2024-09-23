@@ -56,8 +56,16 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<bootable>true</bootable>
 				</partition>
 				<partition> 
-					<size>4GiB</size>
+					<size>2GiB</size>
 					<label>root</label>
+				</partition>
+				<partition> 
+					<size>1GiB</size>
+					<label>tmp</label>
+				</partition>
+				<partition> 
+					<size>1GiB</size>
+					<label>var</label>
 				</partition>
 				<partition>
 					<size>remain</size>
@@ -67,9 +75,39 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		</images>
 
 		<fstab>
+			<!-- the EFI system partition needs to be mounted at /boot/efi -->
+			<bylabel>
+				<label>uefi</label>
+				<mountpoint>/boot/efi</mountpoint>
+				<options>ro</options>
+				<fs>
+					<type>vfat</type>
+				</fs>
+			</bylabel>
 			<bylabel>
 				<label>root</label>
 				<mountpoint>/</mountpoint>
+				<options>ro</options>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>tmp</label>
+				<mountpoint>/tmp</mountpoint>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>var</label>
+				<mountpoint>/var</mountpoint>
 				<fs>
 					<type>ext4</type>
 					<fs-finetuning>
@@ -87,14 +125,6 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					</fs-finetuning>
 				</fs>
 			</bylabel>
-			<!-- the EFI system partition needs to be mounted at /boot/efi -->
-			<bylabel>
-				<label>uefi</label>
-				<mountpoint>/boot/efi</mountpoint>
-				<fs>
-					<type>vfat</type>
-				</fs>
-			</bylabel>
 		</fstab>
 		<install-recommends />
 		<pkg-list>
@@ -108,6 +138,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 		  	<pkg>network-manager</pkg>
 		  	<pkg>console-setup</pkg>
 			<pkg>keyboard-configuration</pkg>
+			<pkg>locales</pkg>
 			<!-- nice to haves -->
 			<pkg>acl</pkg>
 			<pkg>apt-transport-https</pkg>
@@ -137,6 +168,8 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<rm>var/cache/apt/archives/*.deb</rm>
 			<!-- password for this user: elbe -->
 			<adduser passwd_hashed="$6$6eG.vi5Wls9Lb$TL7KIEWcETYFun2loyYt/RVNm5qge3OtWVYJpGGUVaBgkZcDSonVNd0uNX7UFvWrki5XHoyVdX/QUx9/hdXiq1" shell="/bin/bash">elbe</adduser>
+			<cp path="/etc/bash.bashrc">/home/elbe/.bashrc</cp>
+			<command>usermod -aG sudo elbe</command>
 			<file dst="/etc/default/keyboard" append="false" encoding="plain">
 				XKBMODEL="pc105"
 				XKBLAYOUT="it"
@@ -145,7 +178,8 @@ SPDX-FileCopyrightText: Linutronix GmbH
 
 				BACKSPACE="guess"
 			</file>
-			<command>usermod -aG sudo elbe</command>
+			<command>sed -E -i 's/^# ?it_IT\.UTF-8/it_IT.UTF-8/' /etc/locale.gen </command>
+			<command>locale-gen</command>
 		</finetuning>
 
 		<project-finetuning>
@@ -153,6 +187,8 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				<extract_partition part="1">sda1.img</extract_partition>
 				<extract_partition part="2">sda2.img</extract_partition>
 				<extract_partition part="3">sda3.img</extract_partition>
+				<extract_partition part="3">sda4.img</extract_partition>
+				<extract_partition part="3">sda5.img</extract_partition>
 				<command part="1">
 				  ls $ELBE_MNT
 				</command>
@@ -160,13 +196,15 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<set_packer packer="none">sda1.img</set_packer>
 			<set_packer packer="tarxz">sda2.img</set_packer>
 			<set_packer packer="tarxz">sda3.img</set_packer>
+			<set_packer packer="tarxz">sda4.img</set_packer>
+			<set_packer packer="tarxz">sda5.img</set_packer>
 		</project-finetuning>
 	</target>
 	<check-image-list>
 		<check>
 			<img>sda.img.tar.gz</img>
 			<interpreter>qemu-system-x86_64</interpreter>
-			<interpreter-opts>-m 4G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
+			<interpreter-opts>-m 8G -enable-kvm -cpu host -drive format=raw,file=$ELBE_IMG -nographic</interpreter-opts>
 
 			<action> <login /> </action>
 		</check>

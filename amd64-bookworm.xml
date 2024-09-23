@@ -178,7 +178,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 
 				BACKSPACE="guess"
 			</file>
-			<command>sed -i '/^#?it_IT.UTF-8/c\it_IT.UTF-8 UTF-8' /etc/locale.gen </command>
+			<command>sed -E -i 's/^# ?it_IT\.UTF-8/it_IT.UTF-8/' /etc/locale.gen </command>
 			<command>locale-gen</command>
 		</finetuning>
 

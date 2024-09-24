@@ -55,13 +55,13 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<label>uefi</label>
 					<bootable>true</bootable>
 				</partition>
-				<partition>
-					<size>1GiB</size>
-					<label>boot</label>
+				<partition> 
+					<size>2GiB</size>
+					<label>root-a</label>
 				</partition>
 				<partition> 
 					<size>2GiB</size>
-					<label>root</label>
+					<label>root-b</label>
 				</partition>
 				<partition> 
 					<size>1GiB</size>
@@ -89,18 +89,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				</fs>
 			</bylabel>
 			<bylabel>
-				<label>boot</label>
-				<mountpoint>/boot</mountpoint>
-				<options>ro</options>
-				<fs>
-					<type>ext4</type>
-					<fs-finetuning>
-						<device-command>tune2fs -i 0 {device}</device-command>
-					</fs-finetuning>
-				</fs>
-			</bylabel>
-			<bylabel>
-				<label>root</label>
+				<label>root-a</label>
 				<mountpoint>/</mountpoint>
 				<options>ro</options>
 				<fs>

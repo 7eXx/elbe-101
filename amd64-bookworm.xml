@@ -33,7 +33,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 
 	<target>
 		<hostname>amd64-bookworm</hostname>
-		<!-- password: root -->
+		<!-- password: root (mkpass root -m sha512crypt)-->
 		<passwd_hashed>$6$1nmaU6XmOW5ntwo$ZjZhkN2vG1Wc566EOc6HgWaKSCBYE5ZXB1UbXFUt4.kaDQYpGH5uMyFlgzONB3Pyw0GYeVQahhF1bLudNuAIt/</passwd_hashed>
 		<console>ttyS0,115200</console>
 
@@ -140,12 +140,17 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<!-- basic configuration tools -->
 		  	<pkg>sudo</pkg>
 		  	<pkg>network-manager</pkg>
+		  	<pkg>systemd-resolved</pkg>
 		  	<pkg>console-setup</pkg>
 			<pkg>keyboard-configuration</pkg>
 			<pkg>locales</pkg>
 			<!-- nice to haves -->
+			<pkg>curl</pkg>
 			<pkg>acl</pkg>
 			<pkg>apt-transport-https</pkg>
+			<pkg>ca-certificates</pkg>
+			<pkg>gnupg-agent</pkg>
+			<pkg>software-properties-common</pkg>
 			<pkg>debian-keyring</pkg>
 			<pkg>debian-archive-keyring</pkg>
 			<pkg>tcpdump</pkg>
@@ -170,7 +175,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<cp path="/etc/bash.bashrc">/root/.bashrc</cp>
 			<artifact>/etc/hosts</artifact>
 			<rm>var/cache/apt/archives/*.deb</rm>
-			<!-- password for this user: elbe -->
+			<!-- password for this user: elbe (mkpasswd elbe -m sha512crypt)-->
 			<adduser passwd_hashed="$6$6eG.vi5Wls9Lb$TL7KIEWcETYFun2loyYt/RVNm5qge3OtWVYJpGGUVaBgkZcDSonVNd0uNX7UFvWrki5XHoyVdX/QUx9/hdXiq1" shell="/bin/bash">elbe</adduser>
 			<cp path="/etc/bash.bashrc">/home/elbe/.bashrc</cp>
 			<command>usermod -aG sudo elbe</command>

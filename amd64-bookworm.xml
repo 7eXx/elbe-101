@@ -55,6 +55,10 @@ SPDX-FileCopyrightText: Linutronix GmbH
 					<label>uefi</label>
 					<bootable>true</bootable>
 				</partition>
+				<partition>
+					<size>1GiB</size>
+					<label>boot</label>
+				</partition>
 				<partition> 
 					<size>2GiB</size>
 					<label>root</label>
@@ -82,6 +86,17 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				<options>ro</options>
 				<fs>
 					<type>vfat</type>
+				</fs>
+			</bylabel>
+			<bylabel>
+				<label>boot</label>
+				<mountpoint>/boot</mountpoint>
+				<options>ro</options>
+				<fs>
+					<type>ext4</type>
+					<fs-finetuning>
+						<device-command>tune2fs -i 0 {device}</device-command>
+					</fs-finetuning>
 				</fs>
 			</bylabel>
 			<bylabel>
@@ -187,8 +202,9 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				<extract_partition part="1">sda1.img</extract_partition>
 				<extract_partition part="2">sda2.img</extract_partition>
 				<extract_partition part="3">sda3.img</extract_partition>
-				<extract_partition part="3">sda4.img</extract_partition>
-				<extract_partition part="3">sda5.img</extract_partition>
+				<extract_partition part="4">sda4.img</extract_partition>
+				<extract_partition part="5">sda5.img</extract_partition>
+				<extract_partition part="6">sda6.img</extract_partition>
 				<command part="1">
 				  ls $ELBE_MNT
 				</command>
@@ -198,6 +214,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<set_packer packer="tarxz">sda3.img</set_packer>
 			<set_packer packer="tarxz">sda4.img</set_packer>
 			<set_packer packer="tarxz">sda5.img</set_packer>
+			<set_packer packer="tarxz">sda6.img</set_packer>
 		</project-finetuning>
 	</target>
 	<check-image-list>

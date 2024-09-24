@@ -209,7 +209,7 @@ SPDX-FileCopyrightText: Linutronix GmbH
 				  ls $ELBE_MNT
 				</command>
 			</losetup>
-			<set_packer packer="none">sda1.img</set_packer>
+			<set_packer packer="tarxz">sda1.img</set_packer>
 			<set_packer packer="tarxz">sda2.img</set_packer>
 			<set_packer packer="tarxz">sda3.img</set_packer>
 			<set_packer packer="tarxz">sda4.img</set_packer>

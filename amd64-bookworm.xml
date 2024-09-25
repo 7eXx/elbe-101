@@ -179,6 +179,8 @@ SPDX-FileCopyrightText: Linutronix GmbH
 			<adduser passwd_hashed="$6$6eG.vi5Wls9Lb$TL7KIEWcETYFun2loyYt/RVNm5qge3OtWVYJpGGUVaBgkZcDSonVNd0uNX7UFvWrki5XHoyVdX/QUx9/hdXiq1" shell="/bin/bash">elbe</adduser>
 			<cp path="/etc/bash.bashrc">/home/elbe/.bashrc</cp>
 			<command>usermod -aG sudo elbe</command>
+			<rm>/etc/resolv.conf</rm>
+			<ln path="/run/systemd/resolve/stub-resolv.conf">/etc/resolv.conf</ln>
 			<file dst="/etc/default/keyboard" append="false" encoding="plain">
 				XKBMODEL="pc105"
 				XKBLAYOUT="it"
